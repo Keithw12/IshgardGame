@@ -39,12 +39,10 @@ public class PlayerController : MonoBehaviour
 
         //Allow the player to move left and right
         float horizontal = Input.GetAxisRaw("Horizontal");
-        Debug.Log("Horizontal: ");
-        Debug.Log(Input.GetAxisRaw("Horizontal"));
+
         //Allow the player to move forward and back
         float vertical = Input.GetAxisRaw("Vertical");
-        Debug.Log("Vertical: ");
-        Debug.Log(Input.GetAxisRaw("Vertical"));
+
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
