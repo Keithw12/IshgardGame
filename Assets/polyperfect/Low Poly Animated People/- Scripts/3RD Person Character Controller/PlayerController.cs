@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -16,9 +17,15 @@ public class PlayerController : MonoBehaviour
 
     public bool isGrounded;
 
+    public CinemachineFreeLook camera;
+
+    public float turnSmoothTime = 0.1f;
+    float turnSmoothVelocity;
+
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
 
@@ -31,9 +38,15 @@ public class PlayerController : MonoBehaviour
         isGrounded = Grounded();
 
         //Allow the player to move left and right
-        float horizontalMove = Input.GetAxisRaw("Horizontal");
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        Debug.Log("Horizontal: ");
+        Debug.Log(Input.GetAxisRaw("Horizontal"));
         //Allow the player to move forward and back
         float vertical = Input.GetAxisRaw("Vertical");
+        Debug.Log("Vertical: ");
+        Debug.Log(Input.GetAxisRaw("Vertical"));
+
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         float speed = walkSpeed;
         float animSpeed = walkAnimationSpeed;
@@ -45,9 +58,20 @@ public class PlayerController : MonoBehaviour
             animSpeed = runAnimatonSpeed;
         }
 
-        var translation = transform.forward * (vertical * Time.deltaTime);
-        translation += transform.right * (horizontalMove * Time.deltaTime);
-        translation *= speed;
+        var translation = transform.forward * (Mathf.Abs(vertical) * Time.deltaTime);
+        translation += transform.forward * (Mathf.Abs(horizontal) * Time.deltaTime);
+        if(vertical != 0 && horizontal != 0)
+        {
+            
+            translation = translation * speed * .5f;
+
+        }
+        else
+        {
+            translation *= speed;
+        }
+
+        
         translation = rigidbody.position + translation;
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -55,16 +79,36 @@ public class PlayerController : MonoBehaviour
             rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 
-        float horizontal = Input.GetAxis("Mouse X") * Time.deltaTime;
-        Quaternion rotation = transform.rotation * Quaternion.Euler(0, horizontal * rotateSpeed, 0);
-
         animator.SetFloat("Vertical", vertical, 0.1f, Time.deltaTime);
-        animator.SetFloat("Horizontal", horizontalMove, 0.1f, Time.deltaTime);
+        animator.SetFloat("Horizontal", horizontal, 0.1f, Time.deltaTime);
 
         animator.SetFloat("WalkSpeed", animSpeed);
 
-        rigidbody.MovePosition(translation);
-        rigidbody.MoveRotation(rotation);
+
+        if (direction.magnitude >= .01f)
+        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.m_XAxis.Value;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+
+            Vector3 moveDir = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+            if (!Input.GetKey(KeyCode.LeftAlt))
+            {
+                rigidbody.MoveRotation(Quaternion.Euler(0, angle, 0));
+            }
+            
+            rigidbody.MovePosition(translation);
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(Cursor.lockState == CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+        }
+
+
     }
 
     bool Grounded()
