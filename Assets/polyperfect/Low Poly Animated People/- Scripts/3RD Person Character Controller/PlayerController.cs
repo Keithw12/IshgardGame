@@ -17,19 +17,28 @@ public class PlayerController : MonoBehaviour
 
     public bool isGrounded;
 
-    public CinemachineFreeLook camera;
+    public new CinemachineFreeLook camera;
 
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
+    public int maxHealth = 100;
+    public int currentHealth;
+
+    public HealthBar healthBar;
+
     // Start is called before the first frame update
     void Start()
     {
+
         Cursor.lockState = CursorLockMode.Locked;
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
 
         distToGround = GetComponent<Collider>().bounds.extents.y;
+
+        currentHealth = maxHealth;
+        healthBar.setMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
@@ -106,11 +115,22 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.RightAlt))
+        {
+            TakeDamage(5);
+        }
 
     }
 
     bool Grounded()
     {
         return Physics.Raycast(transform.position, -Vector3.up, distToGround, 9);
+    }
+
+    void TakeDamage(int dmg)
+    {
+        currentHealth -= dmg;
+        healthBar.setHealth(currentHealth);
+
     }
 }
