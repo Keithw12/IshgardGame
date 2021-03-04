@@ -13,7 +13,7 @@ public class SpawnController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
         StartCoroutine(EnemySpawn());
     }
 
@@ -28,7 +28,7 @@ public class SpawnController : MonoBehaviour
 
 
               
-            Instantiate(Enemy, new Vector3(xSpawnPositions[i], 0, zSpawnPositions[i]), Quaternion.identity);
+            Instantiate(Enemy, new Vector3(xSpawnPositions[i], 0f, zSpawnPositions[i]), Quaternion.identity);
 
             yield return new WaitForSeconds(timeBetweenSpawns);
             numOfEnemies += 1;
