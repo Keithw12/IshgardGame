@@ -15757,6 +15757,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6656097000227686856}
   - component: {fileID: 6656097000239031764}
+  - component: {fileID: 1778892928613350383}
   m_Layer: 0
   m_Name: man_cowboy
   m_TagString: Untagged
@@ -15909,6 +15910,14 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.06875235, y: -0.017168999, z: -0.00000011920929}
     m_Extent: {x: 0.9790432, y: 0.28578806, z: 0.93557876}
   m_DirtyAABB: 0
+--- !u!33 &1778892928613350383
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6656097000227530216}
+  m_Mesh: {fileID: 4987632398419711469, guid: d9facc7c3f269ad44b8d07eba8801aed, type: 3}
 --- !u!1 &6656097000227530218
 GameObject:
   m_ObjectHideFlags: 0
