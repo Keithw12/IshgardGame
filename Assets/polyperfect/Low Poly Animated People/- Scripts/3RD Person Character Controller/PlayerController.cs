@@ -17,19 +17,22 @@ public class PlayerController : MonoBehaviour
 
     public bool isGrounded;
 
-    public CinemachineFreeLook camera;
+    public new CinemachineFreeLook camera;
 
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
+
     // Start is called before the first frame update
     void Start()
     {
+
         Cursor.lockState = CursorLockMode.Locked;
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
 
         distToGround = GetComponent<Collider>().bounds.extents.y;
+
     }
 
     // Update is called once per frame
@@ -39,12 +42,10 @@ public class PlayerController : MonoBehaviour
 
         //Allow the player to move left and right
         float horizontal = Input.GetAxisRaw("Horizontal");
-        Debug.Log("Horizontal: ");
-        Debug.Log(Input.GetAxisRaw("Horizontal"));
+
         //Allow the player to move forward and back
         float vertical = Input.GetAxisRaw("Vertical");
-        Debug.Log("Vertical: ");
-        Debug.Log(Input.GetAxisRaw("Vertical"));
+
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
@@ -108,11 +109,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
     }
 
     bool Grounded()
     {
         return Physics.Raycast(transform.position, -Vector3.up, distToGround, 9);
     }
+
+
 }
