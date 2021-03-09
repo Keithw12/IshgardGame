@@ -6,6 +6,7 @@ public class EnemyController : MonoBehaviour
 {
     public int enemyHealth;
     public Animator animator;
+    public Collider foot; 
 
 
     // Start is called before the first frame update
@@ -20,6 +21,7 @@ public class EnemyController : MonoBehaviour
         if (enemyHealth <= 0)
         {
             animator.SetBool("isDead", true);
+            foot.enabled = false;
         }
     }
 
@@ -27,7 +29,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Weapon"))
         {
-            damageSkeleton(25);
+            damageSkeleton(100);
         }
     }
 
