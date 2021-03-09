@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
 
     public float distToGround;
 
-    public bool isGrounded;
+    public bool isGrounded; 
+    public bool dead = false;
 
     public new CinemachineFreeLook camera;
 
@@ -37,7 +38,9 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { 
+        if (!dead)
+        {
         isGrounded = Grounded();
 
         //Allow the player to move left and right
@@ -76,8 +79,13 @@ public class PlayerController : MonoBehaviour
         translation = rigidbody.position + translation;
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        { 
+            animator.SetBool("Jump", true);
+            rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
+        } 
+        else 
+        { 
+            animator.SetBool("Jump", false);
         }
 
         animator.SetFloat("Vertical", vertical, 0.1f, Time.deltaTime);
@@ -85,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
         animator.SetFloat("WalkSpeed", animSpeed);
 
-
+       
         if (direction.magnitude >= .01f)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.m_XAxis.Value;
@@ -100,6 +108,8 @@ public class PlayerController : MonoBehaviour
             rigidbody.MovePosition(translation);
             
         }
+
+        
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -116,9 +126,15 @@ public class PlayerController : MonoBehaviour
         else 
         { 
             animator.SetBool("IsAttacking", false);
-        }
+        } 
 
-    }
+        if (Input.GetKeyDown(KeyCode.Mouse1)) 
+        {    
+            dead = true;
+            animator.SetTrigger("IsDead");
+        } 
+        }
+    } 
 
     bool Grounded()
     {
