@@ -107,6 +107,15 @@ public class PlayerController : MonoBehaviour
             {
                 Cursor.lockState = CursorLockMode.None;
             }
+        } 
+
+        if (Input.GetKeyDown(KeyCode.Mouse0)) 
+        { 
+            animator.SetBool("IsAttacking", true);
+        } 
+        else 
+        { 
+            animator.SetBool("IsAttacking", false);
         }
 
     }
