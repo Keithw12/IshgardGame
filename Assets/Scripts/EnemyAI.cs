@@ -28,30 +28,34 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        bool isRunning = animator.GetBool("isRunning");
-        bool isWalking = animator.GetBool("isWalking");
+
         bool isDead = animator.GetBool("isDead");
-        bool isKicking = animator.GetBool("isKicking");
-        bool isPunching_Left = animator.GetBool("isPunching_Left");
-        bool isPunching_Right = animator.GetBool("isPunching_Right");
-        */
-        navMesh.SetDestination(target.position);
-        transform.LookAt(target);
 
-        if (navMesh.remainingDistance > stoppingDistance)
+
+        if (!isDead)
         {
-            navMesh.speed = speed;
-            animator.SetBool("isWalking", true);
-            animator.SetBool("isKicking", false);
+            navMesh.SetDestination(target.position);
+            transform.LookAt(target);
 
+            if (navMesh.remainingDistance > stoppingDistance)
+            {
+                navMesh.speed = speed;
+                animator.SetBool("isWalking", true);
+                animator.SetBool("isKicking", false);
+
+            }
+            else
+            {
+                navMesh.speed = 0f;
+                animator.SetBool("isWalking", false);
+                animator.SetBool("isKicking", true);
+
+            }
         }
         else
         {
             navMesh.speed = 0f;
-            animator.SetBool("isWalking", false);
-            animator.SetBool("isKicking", true);
-
         }
+        
     }
 }
