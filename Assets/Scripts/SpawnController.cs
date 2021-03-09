@@ -10,6 +10,8 @@ public class SpawnController : MonoBehaviour
     public int[] zSpawnPositions = new int[5];
     public int numOfEnemies;
     public float timeBetweenSpawns;
+    public int MaxEnemies;
+
 
     public bool gameOverState = false;
     
@@ -23,7 +25,7 @@ public class SpawnController : MonoBehaviour
     // Update is called once per frame
     IEnumerator EnemySpawn()
     {
-        while (numOfEnemies < 5)
+        while (numOfEnemies < MaxEnemies)
         {
 
             int i = Random.Range(0, 5);

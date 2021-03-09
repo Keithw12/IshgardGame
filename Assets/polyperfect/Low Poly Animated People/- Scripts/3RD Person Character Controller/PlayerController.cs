@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
+    Collider weapon;
+
 
     // Start is called before the first frame update
     void Start()
