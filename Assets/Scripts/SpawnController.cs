@@ -10,6 +10,9 @@ public class SpawnController : MonoBehaviour
     public int[] zSpawnPositions = new int[5];
     public int numOfEnemies;
     public float timeBetweenSpawns;
+
+    public bool gameOverState = false;
+    
     // Start is called before the first frame update
     void Start()
     {

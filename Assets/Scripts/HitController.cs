@@ -33,5 +33,11 @@ public class HitController : MonoBehaviour
         
 
     }
+
+    public void HealPlayer(int heal)
+    {
+        currentHealth += heal;
+        healthBar.setHealth(currentHealth);
+    }
 }
 
