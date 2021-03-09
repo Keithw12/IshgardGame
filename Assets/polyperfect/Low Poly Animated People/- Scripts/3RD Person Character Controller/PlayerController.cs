@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
         }
 
         animator.SetFloat("Vertical", vertical, 0.1f, Time.deltaTime);
-        animator.SetFloat("Horizontal", horizontal, 0.1f, Time.deltaTime);
+        animator.SetFloat("Horizontal", vertical, 0.1f, Time.deltaTime);
 
         animator.SetFloat("WalkSpeed", animSpeed);
 
@@ -107,6 +107,15 @@ public class PlayerController : MonoBehaviour
             {
                 Cursor.lockState = CursorLockMode.None;
             }
+        } 
+
+        if (Input.GetKeyDown(KeyCode.Mouse0)) 
+        { 
+            animator.SetBool("IsAttacking", true);
+        } 
+        else 
+        { 
+            animator.SetBool("IsAttacking", false);
         }
 
     }

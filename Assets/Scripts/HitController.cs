@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine; 
 
 public class HitController : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
+    public Animator animator;
 
     public HealthBar healthBar;
 
@@ -21,8 +22,9 @@ public class HitController : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Damage"))
-        {
-            DoDamageToPlayer(5);
+        { 
+            
+            DoDamageToPlayer(5); 
         }
     }
 
