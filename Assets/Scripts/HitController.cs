@@ -24,7 +24,9 @@ public class HitController : MonoBehaviour
         if (collision.gameObject.CompareTag("Damage"))
         { 
             
-            DoDamageToPlayer(5); 
+            DoDamageToPlayer(5);  
+            animator.SetBool("Hit", true); 
+            Invoke("dmgImpact", 0.8f);
         }
     }
 
@@ -37,6 +39,11 @@ public class HitController : MonoBehaviour
             GameController.GetComponent<GameCtrl>().EndGame();
         }
         healthBar.setHealth(currentHealth);
+    }
+
+    private void dmgImpact() 
+    { 
+            animator.SetBool("Hit", false);   
     }
 
     public void HealPlayer(int heal)
