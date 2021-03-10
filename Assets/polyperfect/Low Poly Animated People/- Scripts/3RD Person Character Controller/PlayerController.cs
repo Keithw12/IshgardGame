@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
-    Collider weapon;
+    public Collider weapon;
 
 
     // Start is called before the first frame update
@@ -35,113 +35,131 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
 
         distToGround = GetComponent<Collider>().bounds.extents.y;
+        weapon.enabled = false;
 
     }
 
     // Update is called once per frame
     void Update()
-    { 
+    {
         if (!dead)
         {
-        isGrounded = Grounded();
+            isGrounded = Grounded();
 
-        //Allow the player to move left and right
-        float horizontal = Input.GetAxisRaw("Horizontal");
+            //Allow the player to move left and right
+            float horizontal = Input.GetAxisRaw("Horizontal");
 
-        //Allow the player to move forward and back
-        float vertical = Input.GetAxisRaw("Vertical");
+            //Allow the player to move forward and back
+            float vertical = Input.GetAxisRaw("Vertical");
 
 
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        float speed = walkSpeed;
-        float animSpeed = walkAnimationSpeed;
+            float speed = walkSpeed;
+            float animSpeed = walkAnimationSpeed;
 
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            vertical *= 2f;
-            speed = runSpeed;
-            animSpeed = runAnimatonSpeed;
-        }
-
-        var translation = transform.forward * (Mathf.Abs(vertical) * Time.deltaTime);
-        translation += transform.forward * (Mathf.Abs(horizontal) * Time.deltaTime);
-        if(vertical != 0 && horizontal != 0)
-        {
-            
-            translation = translation * speed * .5f;
-
-        }
-        else
-        {
-            translation *= speed;
-        }
-
-        
-        translation = rigidbody.position + translation;
-
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        { 
-            animator.SetBool("Jump", true);
-            rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
-        } 
-        else 
-        { 
-            animator.SetBool("Jump", false);
-        }
-
-        animator.SetFloat("Vertical", vertical, 0.1f, Time.deltaTime);
-        animator.SetFloat("Horizontal", vertical, 0.1f, Time.deltaTime);
-
-        animator.SetFloat("WalkSpeed", animSpeed);
-
-       
-        if (direction.magnitude >= .01f)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.m_XAxis.Value;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-
-            Vector3 moveDir = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
-            if (!Input.GetKey(KeyCode.LeftAlt))
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                rigidbody.MoveRotation(Quaternion.Euler(0, angle, 0));
+                vertical *= 2f;
+                speed = runSpeed;
+                animSpeed = runAnimatonSpeed;
             }
-            
-            rigidbody.MovePosition(translation);
-            
-        }
 
-        
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if(Cursor.lockState == CursorLockMode.Locked)
+            var translation = transform.forward * (Mathf.Abs(vertical) * Time.deltaTime);
+            translation += transform.forward * (Mathf.Abs(horizontal) * Time.deltaTime);
+            if (vertical != 0 && horizontal != 0)
             {
-                Cursor.lockState = CursorLockMode.None;
+
+                translation = translation * speed * .5f;
+
             }
-        } 
+            else
+            {
+                translation *= speed;
+            }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0)) 
-        { 
-            animator.SetBool("IsAttacking", true);
-        } 
-        else 
-        { 
-            animator.SetBool("IsAttacking", false);
-        } 
 
-        if (Input.GetKeyDown(KeyCode.Mouse1)) 
-        {    
-            dead = true;
-            animator.SetTrigger("IsDead");
-        } 
+            translation = rigidbody.position + translation;
+
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            {
+                animator.SetBool("Jump", true);
+                rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            }
+            else
+            {
+                animator.SetBool("Jump", false);
+            }
+
+            animator.SetFloat("Vertical", vertical, 0.1f, Time.deltaTime);
+            animator.SetFloat("Horizontal", vertical, 0.1f, Time.deltaTime);
+
+            animator.SetFloat("WalkSpeed", animSpeed);
+
+
+            if (direction.magnitude >= .01f)
+            {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.m_XAxis.Value;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+
+                Vector3 moveDir = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+                if (!Input.GetKey(KeyCode.LeftAlt))
+                {
+                    rigidbody.MoveRotation(Quaternion.Euler(0, angle, 0));
+                }
+
+                rigidbody.MovePosition(translation);
+
+            }
+
+
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (Cursor.lockState == CursorLockMode.Locked)
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+
+                animator.SetBool("IsAttacking", true);
+                Invoke("enableCollider", .41f);
+                Invoke("disableCollider", .91f);
+
+            }
+            else
+            {
+                animator.SetBool("IsAttacking", false);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                dead = true;
+                animator.SetTrigger("IsDead");
+            }
+
         }
-    } 
 
-    bool Grounded()
-    {
-        return Physics.Raycast(transform.position, -Vector3.up, distToGround, 9);
+        bool Grounded()
+
+        {
+            return Physics.Raycast(transform.position, -Vector3.up, distToGround, 9);
+        }
+
+
     }
 
+    private void enableCollider()
+    {
+        weapon.enabled = true;
 
+    }
+
+    private void disableCollider()
+    {
+        weapon.enabled = false;
+    }
 }
