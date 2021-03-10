@@ -7,6 +7,8 @@ public class HealthBar : MonoBehaviour
 {
     public Slider slider;
     public Text text;
+    public Gradient gradient;
+    public Image fill;
 
     // Start is called before the first frame update
 
@@ -15,12 +17,16 @@ public class HealthBar : MonoBehaviour
         slider.maxValue = health;
         slider.value = health;
         text.text = health.ToString();
+
+        fill.color = gradient.Evaluate(1f);
     }
 
     public void setHealth(int health)
     {
         slider.value = health;
         text.text = health.ToString();
+
+        fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 
 
