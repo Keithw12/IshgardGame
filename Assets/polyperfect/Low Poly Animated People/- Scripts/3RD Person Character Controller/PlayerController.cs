@@ -23,7 +23,16 @@ public class PlayerController : MonoBehaviour
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
-    public Collider weapon;
+    public Collider weapon; 
+
+    public GameObject gameControl; 
+    public GameCtrl scriptName; 
+
+    public GameObject gameOver; 
+    public GameOver showEnd;
+    
+
+   
 
 
     // Start is called before the first frame update
@@ -36,6 +45,13 @@ public class PlayerController : MonoBehaviour
 
         distToGround = GetComponent<Collider>().bounds.extents.y;
         weapon.enabled = false;
+
+        gameControl = GameObject.Find("Game State Controller"); 
+        gameOver = GameObject.Find("Canvas"); 
+        showEnd = gameOver.GetComponent<GameOver>();
+        Debug.Assert(gameControl != null);
+        scriptName = gameControl.GetComponent<GameCtrl>(); 
+        Debug.Assert(scriptName != null);
 
     }
 
@@ -138,7 +154,11 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 dead = true;
-                animator.SetTrigger("IsDead");
+                animator.SetTrigger("IsDead");  
+                //gameControl.GetComponent<SpawnController>().MaxEnemies = 0; 
+                
+                
+
             }
 
         }

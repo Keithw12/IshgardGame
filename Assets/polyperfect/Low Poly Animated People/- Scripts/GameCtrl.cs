@@ -34,10 +34,15 @@ public class GameCtrl : MonoBehaviour
             item.SetActive(true);
         }
         GetComponent<SpawnController>().enabled = true;
-    }
+    } 
 
     public void EndGame()
     {
+        foreach (var item in InGameCanvasItems)
+        {
+            item.SetActive(false);
+        }
+        GetComponent<SpawnController>().enabled = false;
         Debug.Log("Ending Game");
     }
 
@@ -91,6 +96,7 @@ public class GameCtrl : MonoBehaviour
 
     public void ExitGame()
     {
+        Debug.Log("Quit Application");
         Application.Quit();
     }
 
