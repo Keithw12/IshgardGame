@@ -9,6 +9,9 @@ public class GameCtrl : MonoBehaviour
     public GameObject[] EndCanvasItems;
 
     public GameObject gameCredits;
+
+    public int waveNumber = 1; 
+
     
     // Start is called before the first frame update
     void Start()

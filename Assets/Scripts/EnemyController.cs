@@ -6,22 +6,30 @@ public class EnemyController : MonoBehaviour
 {
     public int enemyHealth;
     public Animator animator;
-    public Collider foot; 
+    public Collider foot;
+    private GameObject gameStateCtrl;
+    private SpawnController spawnController;
+    private bool dead;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        enemyHealth = 100;
+        gameStateCtrl = GameObject.Find("Game State Controller");
+        spawnController = gameStateCtrl.GetComponent<SpawnController>();
+        enemyHealth = 100 * spawnController.waveNumber;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (enemyHealth <= 0)
+        if (enemyHealth <= 0 && !dead)
         {
+            dead = true;
             animator.SetBool("isDead", true);
             foot.enabled = false;
+            Invoke("destroyEnemy", 15f);
+            spawnController.enemyKilled();
         }
     }
 
@@ -36,5 +44,18 @@ public class EnemyController : MonoBehaviour
     private void damageSkeleton(int dmg)
     {
         enemyHealth -= dmg; 
+    }
+
+    public void setEnemyHealth(int health)
+    {
+        enemyHealth = health;
+    }
+
+
+    private void destroyEnemy()
+    {
+
+        Destroy(gameObject);
+        Destroy(this);
     }
 }
