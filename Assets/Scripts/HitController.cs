@@ -24,7 +24,7 @@ public class HitController : MonoBehaviour
         if (collision.gameObject.CompareTag("Damage"))
         { 
             
-            DoDamageToPlayer(2);  
+            DoDamageToPlayer(5);  
             animator.SetBool("Hit", true); 
             Invoke("dmgImpact", 0.8f);
         }
