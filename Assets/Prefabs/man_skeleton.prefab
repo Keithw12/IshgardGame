@@ -3218,6 +3218,7 @@ GameObject:
   - component: {fileID: 3922148218864881435}
   - component: {fileID: 3922148218864881431}
   - component: {fileID: 3922148218864881437}
+  - component: {fileID: 1941163862100444514}
   m_Layer: 0
   m_Name: man_skeleton
   m_TagString: Untagged
@@ -3340,9 +3341,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  playerObject: {fileID: 0}
   animator: {fileID: 8741848202622180046}
   stoppingDistance: 0.75
   speed: 2
+--- !u!114 &1941163862100444514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391438994634089467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd6d3fe0fbde90439afa4058c3ebc94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1400239503015146377
 GameObject:
   m_ObjectHideFlags: 0

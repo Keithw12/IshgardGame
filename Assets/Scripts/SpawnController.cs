@@ -38,11 +38,19 @@ public class SpawnController : MonoBehaviour
 
     }
 
+    public void resetSpawner()
+    {
+        numOfEnemies = 0;
+        killedEnemies = 0;
+        totalKilledEnemies = 0;
+        waveNumber = 1;
+    }
+
     // Update is called once per frame
     IEnumerator EnemySpawn()
     {
         yield return new WaitForSeconds(timeBetweenWaves);
-        while (numOfEnemies < maxEnemies)
+        while (numOfEnemies < maxEnemies && !gameOverState)
         {
 
             int i = Random.Range(0, 5);
@@ -53,12 +61,6 @@ public class SpawnController : MonoBehaviour
             numOfEnemies += 1;
 
         }
-            
-
-
-
-        
-
     }
 
     public void enemyKilled()
