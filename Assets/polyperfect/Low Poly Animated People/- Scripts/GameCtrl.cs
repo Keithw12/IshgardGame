@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameCtrl : MonoBehaviour
 {
@@ -9,14 +10,20 @@ public class GameCtrl : MonoBehaviour
     public GameObject[] EndCanvasItems;
 
     public GameObject gameCredits;
+    public Text startTitle;
+    public Text deathStats;
 
     public int waveNumber = 1; 
+
+    private SpawnController spawnController;
 
     
     // Start is called before the first frame update
     void Start()
     {
         ShowStartMenu();
+        spawnController = GetComponent<SpawnController>();
+        Debug.Assert(spawnController != null);
     }
 
     // Update is called once per frame
@@ -47,6 +54,7 @@ public class GameCtrl : MonoBehaviour
         }
         GetComponent<SpawnController>().enabled = false;
         Debug.Log("Ending Game");
+
     }
 
     public void ShowStartMenu()
@@ -62,6 +70,11 @@ public class GameCtrl : MonoBehaviour
         foreach (var item in startCanvasItems)
         {
             item.SetActive(false);
+        }
+
+        if (deathStats.enabled)
+        {
+            deathStats.enabled = false;
         }
     }
 
@@ -83,18 +96,10 @@ public class GameCtrl : MonoBehaviour
 
     public void ShowEndMenu()
     {
-        foreach (var item in EndCanvasItems)
-        {
-            item.SetActive(true);
-        }
-    }
-
-    public void HideEndMenu()
-    {
-        foreach (var item in EndCanvasItems)
-        {
-            item.SetActive(false);
-        }
+        startTitle.text = "Game Over";
+        deathStats.text = "Number of Waves Survived: " + spawnController.waveNumber + "Enemies Killed: " + spawnController.totalKilledEnemies;
+        deathStats.enabled = true;
+        ShowStartMenu();
     }
 
     public void ExitGame()
