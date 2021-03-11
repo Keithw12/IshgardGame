@@ -7,13 +7,16 @@ public class EnemyController : MonoBehaviour
     public int enemyHealth;
     public Animator animator;
     public Collider foot;
-    public SpawnController spawnController;
+    private GameObject gameStateCtrl;
+    private SpawnController spawnController;
     private bool dead;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        gameStateCtrl = GameObject.Find("Game State Controller");
+        spawnController = gameStateCtrl.GetComponent<SpawnController>();
         enemyHealth = 100 * spawnController.waveNumber;
     }
 
