@@ -14,6 +14,7 @@ public class EnemyAI : MonoBehaviour
     public float stoppingDistance;
     public float speed;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,11 +25,7 @@ public class EnemyAI : MonoBehaviour
         navMesh.speed = speed; 
 
         playerObject = GameObject.Find("3RD Person Cowboy");
-        target = playerObject.GetComponent<Transform>(); 
-
-
-
-        
+        target = playerObject.GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -48,14 +45,12 @@ public class EnemyAI : MonoBehaviour
                 navMesh.speed = speed;
                 animator.SetBool("isWalking", true);
                 animator.SetBool("isKicking", false);
-
             }
             else
             {
                 navMesh.speed = 0f;
                 animator.SetBool("isWalking", false);
                 animator.SetBool("isKicking", true);
-
             }
         }
         else
@@ -64,4 +59,5 @@ public class EnemyAI : MonoBehaviour
         }
         
     }
+
 }

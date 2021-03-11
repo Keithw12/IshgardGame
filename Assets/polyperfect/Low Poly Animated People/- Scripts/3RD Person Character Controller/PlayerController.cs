@@ -137,10 +137,16 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Mouse1))
             {
+
+            }
+
+            /*
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
                 dead = true;
                 animator.SetTrigger("IsDead");
             }
-
+            */
         }
 
         bool Grounded()
