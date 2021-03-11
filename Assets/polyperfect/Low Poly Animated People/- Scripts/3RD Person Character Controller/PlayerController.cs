@@ -28,8 +28,7 @@ public class PlayerController : MonoBehaviour
     public GameObject gameControl; 
     public GameCtrl scriptName; 
 
-    public GameObject gameOver; 
-    public GameOver showEnd;
+
     
 
    
@@ -47,8 +46,6 @@ public class PlayerController : MonoBehaviour
         weapon.enabled = false;
 
         gameControl = GameObject.Find("Game State Controller"); 
-        gameOver = GameObject.Find("Canvas"); 
-        showEnd = gameOver.GetComponent<GameOver>();
         Debug.Assert(gameControl != null);
         scriptName = gameControl.GetComponent<GameCtrl>(); 
         Debug.Assert(scriptName != null);
