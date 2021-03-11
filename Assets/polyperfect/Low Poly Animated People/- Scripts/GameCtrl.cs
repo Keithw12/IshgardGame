@@ -9,6 +9,7 @@ public class GameCtrl : MonoBehaviour
     public GameObject[] EndCanvasItems;
 
     public GameObject gameCredits;
+    public GameObject gameStory;
 
     public int waveNumber = 1; 
 
@@ -111,5 +112,15 @@ public class GameCtrl : MonoBehaviour
     public void HideCredits()
     {
         gameCredits.SetActive(false);
+    }
+
+    public void ShowStory()
+    {
+        gameStory.SetActive(true);
+    }
+
+    public void HideStory()
+    {
+        gameStory.SetActive(false);
     }
 }
