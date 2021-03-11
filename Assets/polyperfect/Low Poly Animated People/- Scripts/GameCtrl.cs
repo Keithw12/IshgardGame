@@ -17,6 +17,10 @@ public class GameCtrl : MonoBehaviour
     public int waveNumber = 1; 
 
     private SpawnController spawnController;
+    public GameObject menuCamera;
+    public GameObject playerCamera;
+    public HitController hitController;
+    //public PlayerController playerController;
 
     
     // Start is called before the first frame update
@@ -25,12 +29,9 @@ public class GameCtrl : MonoBehaviour
         ShowStartMenu();
         spawnController = GetComponent<SpawnController>();
         Debug.Assert(spawnController != null);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Assert(menuCamera != null);
+        Debug.Assert(playerCamera != null);
+        Debug.Assert(hitController != null);
     }
 
     public void StartGame()
@@ -40,11 +41,12 @@ public class GameCtrl : MonoBehaviour
 
     public void InGame()
     {
+        spawnController.enabled = true;
+        hitController.resetHealth();
         foreach (var item in InGameCanvasItems)
         {
             item.SetActive(true);
         }
-        GetComponent<SpawnController>().enabled = true;
     } 
 
     public void EndGame()
@@ -53,7 +55,8 @@ public class GameCtrl : MonoBehaviour
         {
             item.SetActive(false);
         }
-        GetComponent<SpawnController>().enabled = false;
+        spawnController.enabled = false;
+        ShowEndMenu();
         Debug.Log("Ending Game");
 
     }
@@ -97,9 +100,13 @@ public class GameCtrl : MonoBehaviour
 
     public void ShowEndMenu()
     {
+        Cursor.lockState = CursorLockMode.None;
         startTitle.text = "Game Over";
         deathStats.text = "Number of Waves Survived: " + spawnController.waveNumber + "Enemies Killed: " + spawnController.totalKilledEnemies;
         deathStats.enabled = true;
+        menuCamera.SetActive(true);
+        playerCamera.SetActive(false);
+        spawnController.gameOverState = true;
         ShowStartMenu();
     }
 

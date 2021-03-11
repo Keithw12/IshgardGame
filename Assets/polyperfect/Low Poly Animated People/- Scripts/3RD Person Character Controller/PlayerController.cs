@@ -26,18 +26,21 @@ public class PlayerController : MonoBehaviour
     public Collider weapon; 
 
     public GameObject gameControl; 
-    public GameCtrl scriptName; 
+    public GameCtrl scriptName;
 
-
+    private Transform startPosition;
     
-
+    // public void resetPlayer()
+    // {
+    //     transform.position = startPosition.position;
+    // }
    
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        //startPosition = GetComponent<Transform>();
         Cursor.lockState = CursorLockMode.Locked;
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();

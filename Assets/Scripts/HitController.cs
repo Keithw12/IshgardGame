@@ -41,6 +41,11 @@ public class HitController : MonoBehaviour
         healthBar.setHealth(currentHealth);
     }
 
+    public void resetHealth()
+    {
+        currentHealth = 100;
+    }
+
     private void dmgImpact() 
     { 
             animator.SetBool("Hit", false);   
