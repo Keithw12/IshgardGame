@@ -107,6 +107,7 @@ public class GameCtrl : MonoBehaviour
         menuCamera.SetActive(true);
         playerCamera.SetActive(false);
         spawnController.gameOverState = true;
+        spawnController.destroyEnemies();
         ShowStartMenu();
     }
 
