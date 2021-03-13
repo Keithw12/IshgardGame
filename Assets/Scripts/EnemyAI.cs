@@ -8,9 +8,9 @@ public class EnemyAI : MonoBehaviour
 
     NavMeshAgent navMesh;
 
-    public Transform target; 
-    public GameObject playerObject;
-    public Animator animator;
+    Transform target;
+    GameObject playerObject;
+    Animator animator;
     public float stoppingDistance;
     public float speed;
 
@@ -22,7 +22,7 @@ public class EnemyAI : MonoBehaviour
         navMesh = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         navMesh.stoppingDistance = stoppingDistance;
-        navMesh.speed = speed; 
+        navMesh.speed = speed;
 
         playerObject = GameObject.Find("3RD Person Cowboy");
         target = playerObject.GetComponent<Transform>();

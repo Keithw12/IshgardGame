@@ -9,6 +9,7 @@ public class RotateItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerGameObject = GameObject.FindGameObjectWithTag("player");
         Debug.Assert(playerGameObject != null);
     }
 

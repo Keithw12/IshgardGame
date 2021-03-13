@@ -9,12 +9,16 @@ public class EnemyController : MonoBehaviour
     public Collider foot;
     private GameObject gameStateCtrl;
     private SpawnController spawnController;
-    private bool dead;
+    public GameObject heartDrop;
+    private bool dead = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Assert(foot != null);
+        Debug.Assert(animator != null);
+        Debug.Assert(heartDrop != null);
         gameStateCtrl = GameObject.Find("Game State Controller");
         spawnController = gameStateCtrl.GetComponent<SpawnController>();
         enemyHealth = 100 * spawnController.waveNumber;
@@ -28,8 +32,19 @@ public class EnemyController : MonoBehaviour
             dead = true;
             animator.SetBool("isDead", true);
             foot.enabled = false;
+            rollForDrop();
             Invoke("destroyEnemy", 15f);
             spawnController.enemyKilled();
+        }
+    }
+
+    void rollForDrop()
+    {
+        int drop = Random.Range(1,4);
+        // 25% chance of drop
+        if (drop == 1)
+        {
+            Instantiate(heartDrop, gameObject.transform.position, gameObject.transform.rotation);
         }
     }
 
@@ -54,8 +69,6 @@ public class EnemyController : MonoBehaviour
 
     private void destroyEnemy()
     {
-
         Destroy(gameObject);
-        Destroy(this);
     }
 }
