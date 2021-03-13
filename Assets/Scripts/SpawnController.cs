@@ -38,6 +38,15 @@ public class SpawnController : MonoBehaviour
 
     }
 
+    public void destroyEnemies()
+    {
+        GameObject[] enemies =  GameObject.FindGameObjectsWithTag("enemy");
+        foreach (var enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+    }
+
     public void resetSpawner()
     {
         numOfEnemies = 0;
