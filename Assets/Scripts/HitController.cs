@@ -25,7 +25,8 @@ public class HitController : MonoBehaviour
         { 
             
             DoDamageToPlayer(5);  
-            animator.SetBool("Hit", true); 
+            animator.SetBool("Hit", true);
+            animator.SetTrigger("HitTrig");
             Invoke("dmgImpact", 0.8f);
         }
     }
