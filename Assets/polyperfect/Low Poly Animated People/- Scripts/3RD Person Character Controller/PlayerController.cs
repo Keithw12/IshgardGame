@@ -7,28 +7,24 @@ using Cinemachine;
 public class PlayerController : MonoBehaviour
 {
     public float walkSpeed, runSpeed, rotateSpeed, jumpForce, walkAnimationSpeed, runAnimatonSpeed;
-
     public Animator animator;
     public new Rigidbody rigidbody;
 
     Vector3 offset;
 
     public float distToGround;
-
     public bool isGrounded; 
     public bool dead = false;
-
     public new CinemachineFreeLook camera;
-
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
-
     public Collider weapon; 
-
     public GameObject gameControl; 
     public GameCtrl scriptName;
-
     private Transform startPosition;
+    public static PlayerController instance = null;
+    public bool isAttacking = false;
+    public AudioSource swordSwing;
     
     // public void resetPlayer()
     // {
@@ -40,6 +36,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
         //startPosition = GetComponent<Transform>();
         Cursor.lockState = CursorLockMode.Locked;
         rigidbody = GetComponent<Rigidbody>();
@@ -85,9 +82,7 @@ public class PlayerController : MonoBehaviour
             translation += transform.forward * (Mathf.Abs(horizontal) * Time.deltaTime);
             if (vertical != 0 && horizontal != 0)
             {
-
                 translation = translation * speed * .5f;
-
             }
             else
             {
@@ -128,8 +123,6 @@ public class PlayerController : MonoBehaviour
 
             }
 
-
-
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (Cursor.lockState == CursorLockMode.Locked)
@@ -138,44 +131,27 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !isAttacking)
             {
-
+                isAttacking = true;
                 animator.SetBool("IsAttacking", true);
+                animator.SetTrigger("attackingTrig");
+                swordSwing.Play();
+                Invoke("resetAttack", 0.3f);
                 Invoke("enableCollider", .41f);
                 Invoke("disableCollider", .91f);
-
             }
-            else
-            {
-                animator.SetBool("IsAttacking", false);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Mouse1))
-            {
-
-            }
-
-            /*
-            if (Input.GetKeyDown(KeyCode.Mouse1))
-            {
-                dead = true;
-                animator.SetTrigger("IsDead");  
-                //gameControl.GetComponent<SpawnController>().MaxEnemies = 0; 
-                
-                
-
-            }
-            */
         }
+    }
 
-        bool Grounded()
+    void resetAttack()
+    {
+        animator.SetBool("IsAttacking", false);
+    }
 
-        {
-            return Physics.Raycast(transform.position, -Vector3.up, distToGround, 9);
-        }
-
-
+    bool Grounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, distToGround, 9);
     }
 
     private void enableCollider()

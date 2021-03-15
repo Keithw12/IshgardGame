@@ -20,7 +20,8 @@ public class GameCtrl : MonoBehaviour
     public GameObject menuCamera;
     public GameObject playerCamera;
     public HitController hitController;
-    //public PlayerController playerController;
+    public AudioSource westernTheme;
+    public bool isInMenu = true;
 
     
     // Start is called before the first frame update
@@ -34,13 +35,9 @@ public class GameCtrl : MonoBehaviour
         Debug.Assert(hitController != null);
     }
 
-    public void StartGame()
-    {
-        ShowStartMenu();
-    }
-
     public void InGame()
     {
+        //westernTheme.Stop();
         spawnController.enabled = true;
         hitController.resetHealth();
         foreach (var item in InGameCanvasItems)
@@ -58,11 +55,12 @@ public class GameCtrl : MonoBehaviour
         spawnController.enabled = false;
         ShowEndMenu();
         Debug.Log("Ending Game");
-
+        //westernTheme.Play();
     }
 
     public void ShowStartMenu()
     {
+        isInMenu = true;
         foreach (var item in startCanvasItems)
         {
             item.SetActive(true);
