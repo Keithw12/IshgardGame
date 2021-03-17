@@ -21,8 +21,14 @@ public class SpawnController : MonoBehaviour
     void Start()
     {
 
+        //StartCoroutine(EnemySpawn());
+    }
+
+    void OnEnable()
+    {
         StartCoroutine(EnemySpawn());
     }
+
     void Update()
     {
         if(killedEnemies == maxEnemies)
@@ -53,6 +59,8 @@ public class SpawnController : MonoBehaviour
         killedEnemies = 0;
         totalKilledEnemies = 0;
         waveNumber = 1;
+        gameOverState = false;
+        this.enabled = true;
     }
 
     // Update is called once per frame

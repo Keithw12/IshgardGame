@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour
     {
         instance = this;
         //startPosition = GetComponent<Transform>();
-        Cursor.lockState = CursorLockMode.Locked;
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
 
@@ -50,6 +49,11 @@ public class PlayerController : MonoBehaviour
         scriptName = gameControl.GetComponent<GameCtrl>(); 
         Debug.Assert(scriptName != null);
 
+    }
+
+    void OnEnable()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame

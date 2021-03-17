@@ -19,6 +19,11 @@ public class HitController : MonoBehaviour
         Debug.Assert(GameController != null);
     }
 
+    void OnEnable()
+    {
+        healthBar.setHealth(currentHealth);
+    }
+
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Damage"))
